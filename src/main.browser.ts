@@ -13,13 +13,14 @@ import { AppModule } from './app';
 /**
  * Bootstrap our Angular app with a top level NgModule
  */
-export function main() {
-  setTimeout(()=>{
+export function main () {
+  setTimeout(() => {
     platformBrowserDynamic()
       .bootstrapModule(AppModule)
       .then(decorateModuleRef)
       .catch((err) => console.error(err));
-  }, 1200)
+    },
+    1200);
 }
 
 /**

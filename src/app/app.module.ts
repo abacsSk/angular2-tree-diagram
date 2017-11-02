@@ -16,7 +16,7 @@ import { ENV_PROVIDERS } from './environment';
 import { AppComponent } from './app.component';
 import { AppState, InternalStateType } from './app.service';
 import { TreeDiagram } from './tree';
-//import { TreeDiagram } from 'angular2-tree-diagramm';
+// import { TreeDiagram } from 'angular2-tree-diagramm';
 
 import '../styles/styles.scss';
 import '../styles/headings.css';
@@ -33,7 +33,7 @@ type StoreType = {
 };
 
 /**
- * `AppModule` is the main entry point into Angular2's bootstraping process
+ * `AppModule` is the main entry point into Angular2's bootstrapping process
  */
 @NgModule({
   bootstrap: [ AppComponent ],
@@ -62,7 +62,7 @@ export class AppModule {
     public appState: AppState
   ) {}
 
-  public hmrOnInit(store: StoreType) {
+  public hmrOnInit (store: StoreType) {
     if (!store || !store.state) {
       return;
     }
@@ -84,13 +84,12 @@ export class AppModule {
     delete store.restoreInputValues;
   }
 
-  public hmrOnDestroy(store: StoreType) {
+  public hmrOnDestroy (store: StoreType) {
     const cmpLocation = this.appRef.components.map((cmp) => cmp.location.nativeElement);
     /**
      * Save state
      */
-    const state = this.appState._state;
-    store.state = state;
+    store.state = this.appState._state;
     /**
      * Recreate root elements
      */
@@ -105,7 +104,7 @@ export class AppModule {
     removeNgStyles();
   }
 
-  public hmrAfterDestroy(store: StoreType) {
+  public hmrAfterDestroy (store: StoreType) {
     /**
      * Display new elements
      */

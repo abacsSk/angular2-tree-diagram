@@ -2,8 +2,8 @@
  * Angular 2 decorators and services
  */
 import {
-  Component,
-  ViewEncapsulation
+    Component, OnInit,
+    ViewEncapsulation
 } from '@angular/core';
 import { AppState } from './app.service';
 
@@ -18,27 +18,26 @@ import { AppState } from './app.service';
     './app.component.css'
   ],
   template: `
-      <tree-diagram [data]="tree"></tree-diagram>
+      <tree-diagram [data]='tree'></tree-diagram>
   `
 })
-export class AppComponent{
-  constructor(
-    public appState: AppState
-  ) {
-  }
+export class AppComponent implements OnInit {
 
   public treeConfig = {
     nodeWidth: 150,
     nodeHeight: 100
-  }
+  };
 
-  public tree: any
+  public tree: any;
 
+  constructor (
+    public appState: AppState
+  ) { }
 
   public async ngOnInit () {
-    let json = await System.import('../assets/mock-data/mock-data.json')
+    let json = await System.import('../assets/mock-data/mock-data.json');
     this.tree = {
-      json: json,
+      json,
       config: this.treeConfig
     };
   }
