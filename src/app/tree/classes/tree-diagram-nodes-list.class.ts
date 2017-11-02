@@ -12,7 +12,7 @@ export class TreeDiagramNodesList {
     displayName: 'New node',
     children: [],
     guid: '',
-    parentId: null
+    parentId: null,
   };
 
   constructor (_nodes: any[], private config) {

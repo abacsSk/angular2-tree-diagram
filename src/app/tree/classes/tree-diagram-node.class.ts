@@ -11,6 +11,8 @@ export class TreeDiagramNode {
   public children: Set<string>;
   public displayName: string;
 
+  public config;
+
   private _toggle: boolean;
 
   constructor (props, config, public getThisNodeList: () => TreeDiagramNodesList) {
@@ -24,6 +26,8 @@ export class TreeDiagramNode {
     }
 
     this._toggle = false;
+
+    this.config = config;
 
     if (config.nodeWidth) {
       this.width = config.nodeWidth;
@@ -59,22 +63,36 @@ export class TreeDiagramNode {
     return this.parentId == null;
   }
 
-  public dragenter (event) {
+  public dragenter (event): void {
+    if (this.config.readOnly) {
+      return;
+    }
     event.dataTransfer.dropEffect = 'move';
   }
 
-  public dragleave (event) {
+  public dragleave (event): void {
+    if (this.config.readOnly) {
+      return;
+    }
     this.isDragover = false;
   }
 
-  public dragstart (event) {
+  public dragstart (event): void {
+    if (this.config.readOnly) {
+      return;
+    }
+
     event.dataTransfer.effectAllowed = 'move';
     this.isDragging = true;
     this.toggle(false);
     this.getThisNodeList().draggingNodeGuid = this.guid;
   }
 
-  public dragover (event) {
+  public dragover (event): boolean {
+    if (this.config.readOnly) {
+      return false;
+    }
+
     event.preventDefault();
     if (!this.isDragging) {
       this.isDragover = true;
@@ -83,12 +101,20 @@ export class TreeDiagramNode {
     return false;
   }
 
-  public dragend (event) {
+  public dragend (event): void {
+    if (this.config.readOnly) {
+      return;
+    }
+
     this.isDragover = false;
     this.isDragging = false;
   }
 
-  public drop (event) {
+  public drop (event): boolean {
+    if (this.config.readOnly) {
+        return false;
+    }
+
     event.preventDefault();
     let guid = this.getThisNodeList().draggingNodeGuid;
     this.getThisNodeList().transfer(guid, this.guid);

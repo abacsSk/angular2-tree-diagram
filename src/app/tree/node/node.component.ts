@@ -23,11 +23,15 @@ export class NodeComponent {
       private sanitizer: DomSanitizer,
   ) { }
 
-  @Input() set treeDiagramNode(guid) {
+  @Input() set treeDiagramNode (guid) {
     this.node = this.nodesSrv.getNode(guid);
     this.childrenTransform = this.sanitizer.bypassSecurityTrustStyle(
         `translate(calc(-50% + ${Math.round(this.node.width / 2)}px), 45px)`
     );
+  }
+
+  public isEditable (): boolean {
+    return ! this.node.config.readOnly;
   }
 
 }

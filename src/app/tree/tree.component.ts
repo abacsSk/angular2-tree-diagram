@@ -17,9 +17,13 @@ export class TreeComponent {
 
   public nodes;
 
+  /**
+   * Configuration with default values.
+   */
   private _config = {
     nodeWidth: 200,
-    nodeHeight: 100
+    nodeHeight: 100,
+    readOnly: false
   };
 
   private paneDragging = false;
@@ -87,6 +91,10 @@ export class TreeComponent {
     this.zoom += delta / 1000 / 2;
     this.zoom = Math.min(Math.max(this.zoom, 0.2), 3);
     this.makeTransform();
+  }
+
+  public isEditable (): boolean {
+      return ! this._config.readOnly;
   }
 
 }
